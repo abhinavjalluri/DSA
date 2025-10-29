@@ -1,0 +1,4 @@
+Geeks for Geeks
+1.Min-Heap
+2.Max-Heap
+3.Priority Queue
