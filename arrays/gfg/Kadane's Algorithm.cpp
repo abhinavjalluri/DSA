@@ -20,7 +20,6 @@
 class Solution {
   public:
     int maxSubarraySum(vector<int> &arr) {
-        // Code here
         int n = arr.size();
         int max_sum = arr[0];
         int sum = 0;

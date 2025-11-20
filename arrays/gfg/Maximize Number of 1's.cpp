@@ -19,7 +19,6 @@
 class Solution {
   public:
     int maxOnes(vector<int>& arr, int k) {
-        // code here
         int n = arr.size();
         int max_length = 0;
         int count = 0;
