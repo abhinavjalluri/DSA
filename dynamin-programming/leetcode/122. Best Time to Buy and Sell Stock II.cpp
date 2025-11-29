@@ -53,6 +53,7 @@ public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
         vector<vector<int>>dp(prices.size(), vector<int>(2,-1));
+        return f(0,0,dp,prices);
     }
 
 ////////////////////////////////////    Memoization    /////////////////////////////////////////
