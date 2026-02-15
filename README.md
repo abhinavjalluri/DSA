@@ -130,8 +130,8 @@ Questions
 `Recursion`
 
 `Easy`
-- 509 Fibonacci Number
-- Reverse String
+- https://leetcode.com/problems/fibonacci-number/description/
+- https://leetcode.com/problems/reverse-string/description/. [two-pointer]    
 
 - 24 Swap Nodes in Pairs
 - 206 Reverse Linked List
