@@ -37,10 +37,12 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// DFS Solution
+
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        // DFS 
         if(!p && !q){
             return true;
         }
@@ -49,23 +51,29 @@ public:
         }
 
         return (isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+    }
+};
 
-        // BFS
+// BFS Solution
 
-        // queue<pair<TreeNode*,TreeNode*>>queuePair;
-        // queuePair.push({p, q});
-        // while(!queuePair.empty()){
-        //     auto [Node1, Node2] = queuePair.front();
-        //     queuePair.pop();
-        //     if(!Node1 && !Node2){
-        //         continue;
-        //     }
-        //     if(!Node1 || !Node2 || Node1->val != Node2->val){
-        //         return false;
-        //     }
-        //     queuePair.push({Node1->left, Node2->left});
-        //     queuePair.push({Node1->right, Node2->right});
-        // }
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+
+        queue<pair<TreeNode*,TreeNode*>>queuePair;
+        queuePair.push({p, q});
+        while(!queuePair.empty()){
+            auto [Node1, Node2] = queuePair.front();
+            queuePair.pop();
+            if(!Node1 && !Node2){
+                continue;
+            }
+            if(!Node1 || !Node2 || Node1->val != Node2->val){
+                return false;
+            }
+            queuePair.push({Node1->left, Node2->left});
+            queuePair.push({Node1->right, Node2->right});
+        }
         return true;
     }
 };

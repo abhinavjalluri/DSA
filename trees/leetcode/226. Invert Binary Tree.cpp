@@ -35,7 +35,7 @@
  * };
  */
 
- // DFS
+// DFS Solution
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
@@ -53,22 +53,21 @@ public:
     }
 };
 
-
-// BFS
-// class Solution {
-// public:
-//     TreeNode* invertTree(TreeNode* root) {
-//         queue<TreeNode*> q;
-//         q.push(root);
-//         while(!q.empty()){
-//             TreeNode* front = q.front();
-//             q.pop();
-//             if(front){
-//                 swap(front->right, front->left);
-//                 q.push(front->right);
-//                 q.push(front->left);
-//             }
-//         }
-//         return root;
-//     }
-// };
+// BFS Solution
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* front = q.front();
+            q.pop();
+            if(front){
+                swap(front->right, front->left);
+                q.push(front->right);
+                q.push(front->left);
+            }
+        }
+        return root;
+    }
+};
