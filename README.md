@@ -2,10 +2,8 @@
 
 ## Data Structures and Algorithms
 
-`150 Questions`: Data structures
-Solve and understand these questions, make notes, watch solutions, and have fun. Don’t just
-solve them to get a job, but to learn something new! These are mostly internship-level
-questions (easy-medium), but will help you in general with problem solving!
+
+`150 Questions`: https://leetcode.com/studyplan/top-interview-150/
 
 `Arrays`
 
