@@ -28,6 +28,30 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int>freq;
+        int n = s.size();
+        int left = 0;
+        int right = 0;
+        int maxi = 0;
+        while(right < n){
+            while(freq[s[right]] > 0){
+                freq[s[left]]--;
+                left++;
+            }
+            maxi = max(maxi, right-left+1);
+            freq[s[right]]++;
+            right++;
+        }
+        return maxi;
+        
+    }
+};
+
+// Another approach using unordered_map to check for distinct elements
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
         int n = s.size();
         if(n == 0)
         return 0;
