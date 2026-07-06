@@ -41,3 +41,33 @@ class Solution {
         return rooms;
     }
 };
+
+// Another approach using two pointers to find the minimum number of meeting rooms required.
+
+class Solution {
+  public:
+    int minMeetingRooms(vector<int> &start, vector<int> &end) {
+        sort(start.begin(), start.end());
+        sort(end.begin(), end.end());
+        int n = start.size();
+        int meetingStartIndex = 0;
+        int roomFreeTimeIndex = 0;
+        int rooms = 0;
+        int ans = 0;
+        while(meetingStartIndex < n){
+            // If the next meeting starts before the earliest ending meeting ends, we need a new room
+            if(start[meetingStartIndex] < end[roomFreeTimeIndex]){
+                rooms++;
+                meetingStartIndex++;
+            }
+            // If the next meeting starts after or when the earliest ending meeting ends, we can reuse that room
+            else{
+                rooms--;
+                roomFreeTimeIndex++;
+            }
+            ans = max(ans,rooms);
+        }
+        return ans;
+    }
+};
+

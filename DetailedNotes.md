@@ -884,3 +884,229 @@ int* ptr = &x;                                           // pointer: holds the m
 ```
 
 > **Biggest cross-language trap:** integer overflow is silent in both languages for fixed-width types — always widen to `long`/`long long` before multiplying values that might exceed ~2 billion.
+
+------------------------------------------------------------------------
+
+# Sorting & Comparators 
+
+## Java
+
+### Arrays
+
+```java
+Arrays.sort(arr);                          // sort primitive array ascending
+Arrays.sort(arr, Collections.reverseOrder()); // descending (Integer[], not int[])
+```
+
+### ArrayList
+
+```java
+Collections.sort(list);                    // ascending
+Collections.reverse(list);                 // reverse
+list.sort(null);                           // ascending (same as Collections.sort)
+```
+
+### Custom Comparator
+
+```java
+Collections.sort(list, (a, b) -> Integer.compare(a.age, b.age));   // ascending
+Collections.sort(list, (a, b) -> Integer.compare(b.age, a.age));   // descending
+```
+
+### Multiple Conditions
+
+```java
+Collections.sort(list, (a, b) -> {
+    if (a.age == b.age)
+        return Integer.compare(a.id, b.id); // tie-breaker
+    return Integer.compare(a.age, b.age);
+});
+```
+
+### Modern Java (Preferred)
+
+```java
+list.sort(
+    Comparator.comparingInt((Student s) -> s.age)
+              .thenComparingInt(s -> s.id)
+);
+```
+
+Descending
+
+```java
+list.sort(
+    Comparator.comparingInt((Student s) -> s.age)
+              .reversed()
+);
+```
+
+### Comparator Return Values
+
+```java
+Negative -> a comes before b
+Positive -> a comes after b
+Zero     -> equal
+```
+
+> Prefer `Integer.compare(a, b)` instead of `a - b` (avoids integer overflow).
+
+---
+
+## C++
+
+### Ascending
+
+```cpp
+sort(v.begin(), v.end());
+```
+
+### Descending
+
+```cpp
+sort(v.begin(), v.end(), greater<int>());
+```
+
+or
+
+```cpp
+sort(v.rbegin(), v.rend());
+```
+
+### Custom Comparator
+
+```cpp
+sort(v.begin(), v.end(),
+[](auto &a, auto &b){
+    return a.age < b.age;
+});
+```
+
+### Multiple Conditions
+
+```cpp
+sort(v.begin(), v.end(),
+[](auto &a, auto &b){
+
+    if(a.age == b.age)
+        return a.id < b.id;
+
+    return a.age < b.age;
+});
+```
+
+### Comparator Return Values
+
+```cpp
+true  -> a comes before b
+false -> b comes before a
+```
+
+> C++ comparators return **bool**, unlike Java which returns **negative / zero / positive**.
+
+---
+
+## Common Interview Patterns
+
+### Sort Pair
+
+### Java
+
+```java
+list.sort((a, b) -> Integer.compare(a.getKey(), b.getKey()));
+```
+
+### C++
+
+```cpp
+sort(v.begin(), v.end());      // sorts by first, then second
+```
+
+---
+
+### Sort by Second Value
+
+### Java
+
+```java
+list.sort((a, b) -> Integer.compare(a[1], b[1]));
+```
+
+### C++
+
+```cpp
+sort(v.begin(), v.end(),
+[](auto &a, auto &b){
+    return a.second < b.second;
+});
+```
+
+---
+
+### Sort 2D Array / Vector
+
+### Java
+
+```java
+Arrays.sort(arr, (a, b) -> Integer.compare(a[0], b[0]));
+```
+
+Multiple columns
+
+```java
+Arrays.sort(arr, (a, b) -> {
+
+    if(a[0] == b[0])
+        return Integer.compare(a[1], b[1]);
+
+    return Integer.compare(a[0], b[0]);
+});
+```
+
+### C++
+
+```cpp
+sort(arr.begin(), arr.end(),
+[](auto &a, auto &b){
+    return a[0] < b[0];
+});
+```
+
+Multiple columns
+
+```cpp
+sort(arr.begin(), arr.end(),
+[](auto &a, auto &b){
+
+    if(a[0] == b[0])
+        return a[1] < b[1];
+
+    return a[0] < b[0];
+});
+```
+
+---
+
+## Comparator Cheat Sheet
+
+| Java | C++ |
+|------|------|
+| `Integer.compare(a,b)` | `a < b` |
+| `Integer.compare(b,a)` | `a > b` |
+| Negative → before | `true` → before |
+| Positive → after | `false` → after |
+| `Comparator` | Lambda Comparator |
+| `Collections.sort()` / `Arrays.sort()` | `sort()` |
+
+---
+
+## Remember
+
+- Java Comparator → **returns int**
+- C++ Comparator → **returns bool**
+- Use **Integer.compare()** instead of subtraction.
+- For multiple conditions:
+  - Compare first key.
+  - If equal, compare second key.
+  - Continue until all tie-breakers are handled.
+- C++ comparator should use **`<`** (or **`>`** for descending), **not `<=` or `>=`**.
