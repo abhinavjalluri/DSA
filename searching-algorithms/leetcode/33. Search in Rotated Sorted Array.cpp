@@ -35,31 +35,36 @@ class Solution {
 public:
     int search(vector<int>& nums, int target) {
         int n = nums.size();
-        int i = 0;
-        int j = n-1;
-        while(i<=j){
-            int m = i+(j-i)/2;
-            if(nums[m] == target){
-                return m;
+        int left = 0;
+        int right = n-1;
+        while(left <= right){
+            int mid = left+(right-left)/2;
+            if(nums[mid] == target){
+                return mid;
             }
-            if(nums[i] <= nums[m]){
-                if(nums[i] <= target && target < nums[m] ){
-                    j = m-1;
+            // Left Sorted Array
+            if(nums[left] <= nums[mid]){
+                // Target is in the left sorted array
+                if(nums[left] <= target && target <= nums[mid]){
+                    right = mid-1;
                 }
+                // Target is in the right sorted array
                 else{
-                    i = m+1;
+                    left = mid+1;
                 }
             }
+            // Right Sorted Array
             else{
-                if(nums[m] < target && target<= nums[j]){
-                    i = m+1;
+                // Target is in the right sorted array
+                if(nums[mid] <= target && target <= nums[right]){
+                    left = mid+1;
                 }
+                // Target is in the left sorted array
                 else{
-                    j = m-1;
+                    right = mid-1;
                 }
             }
         }
         return -1;
-        
     }
 };
