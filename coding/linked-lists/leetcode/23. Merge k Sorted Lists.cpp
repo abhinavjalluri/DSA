@@ -89,3 +89,49 @@ public:
         return ans->next;
     }
 };
+
+// Another approach using priority queue
+class Solution {
+public:
+
+    struct Compare{
+        bool operator()(ListNode* a, ListNode* b){
+            return a->val > b->val;
+        }
+    };
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, Compare>pq;
+        for(int i = 0 ; i < lists.size(); i++){
+            if(lists[i]){
+                pq.push(lists[i]);
+            }
+        }
+        ListNode* ans = new ListNode(0);
+        ListNode* temp = ans;
+        while(!pq.empty()){
+            ListNode* node = pq.top();
+            pq.pop();
+            temp->next = node;
+            temp = temp->next;
+            if(node->next){
+                pq.push(node->next);
+            }
+        }
+        return ans->next;
+    }
+};
+
+// Complexity Summary
+// Approach	                      Time Complexity	Space Complexity
+// Divide & Conquer	                   O(N log k)	O(log k) (recursion stack)
+// Min Heap (Priority Queue)	       O(N log k)	O(k) (heap)
+
+// Where:
+
+// N = Total number of nodes across all linked lists.
+// k = Number of linked lists.
+
+// Which one to use?
+
+// Divide & Conquer uses less auxiliary memory (O(log k)) and is excellent when recursion is acceptable.
+// Priority Queue is often easier to understand and implement, and naturally generalizes to problems involving merging multiple sorted streams.
