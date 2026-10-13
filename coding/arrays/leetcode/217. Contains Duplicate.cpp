@@ -48,3 +48,21 @@ public:
         return false;
     }
 };
+
+// Another approach using hash set to achieve O(n) time complexity and O(n) space complexity.
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> st;
+
+        for (int num : nums) {
+            if (st.count(num)) {
+                return true;
+            }
+            st.insert(num);
+        }
+
+        return false;
+    }
+};
