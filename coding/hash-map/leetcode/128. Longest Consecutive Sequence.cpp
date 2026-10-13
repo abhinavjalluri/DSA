@@ -49,3 +49,33 @@ public:
         return max(maxi, start);
     }
 };
+
+// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+// Another approach using hash set to achieve O(n) time complexity.
+ 
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> values(nums.begin(), nums.end());
+        int longest = 0;
+
+        for (int num : values) {
+            // Only start counting at the beginning of a sequence.
+            if (values.find(num - 1) != values.end()) {
+                continue;
+            }
+
+            int current = num;
+            int length = 1;
+
+            while (values.find(current + 1) != values.end()) {
+                current++;
+                length++;
+            }
+
+            longest = max(longest, length);
+        }
+
+        return longest;
+    }
+};
