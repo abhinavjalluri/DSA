@@ -32,3 +32,49 @@ public:
         return nums[n/2];
     }
 };
+
+// Another approach using Boyer-Moore Voting Algorithm to achieve O(n) time complexity and O(1) space complexity.
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int candidate = 0;
+        int count = 0;
+
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+
+            if (num == candidate) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+
+        return candidate;
+    }
+};
+
+// Another approach using hash map to achieve O(n) time complexity and O(n) space complexity.
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int, int> freq;
+        int n = nums.size();
+
+        for (int num : nums) {
+            freq[num]++;
+
+            if (freq[num] > n / 2) {
+                return num;
+            }
+        }
+
+        return -1;
+    }
+};
+
+
