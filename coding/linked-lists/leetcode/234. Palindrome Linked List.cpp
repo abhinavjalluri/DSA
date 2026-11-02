@@ -35,3 +35,51 @@ public:
         
     }
 };
+
+// Another approach using O(1) space complexity by reversing the second half of the linked list and comparing it with the first half.
+
+class Solution {
+public:
+    ListNode*middle(ListNode* head){
+        ListNode*slow=head;
+        ListNode*fast=head;
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+
+        return slow;
+    }
+
+     ListNode*reversed(ListNode* head){
+        ListNode*prev=NULL;
+        ListNode*current=head;
+        ListNode*nextNode=NULL;
+        while(current!=NULL){
+            nextNode=current->next;
+            current->next=prev;
+            prev=current;
+            current=nextNode;
+        }
+        return prev;
+        
+    }
+
+
+    bool isPalindrome(ListNode* head) {
+        ListNode*first=head;
+        ListNode*second=middle(head);
+        second=reversed(second->next);
+        while(second!=NULL){
+            if(first->val!=second->val){
+                return false;
+            }
+            first=first->next;
+            second=second->next;
+        }
+
+        return true;
+
+        
+    }
+};
